@@ -1,8 +1,6 @@
-# Luna calculator V2.2 Now you can do this (Use bracket) !! : 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
-# f1 = 2*(5+3*((2+2-(4/5))*(4-3))) first case that I used to solve this problem
-
-import math # import Pi and e value just for accuracy
-print('you can use p as 3.141592 or e as 2.718281') # example --> calculate: 1*p output: 3.1415926535...
+# Luna calculator V2.2 Now you can use bracket () example 1/(5+5) , 1/-(5+5) , or you want more longer 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
+import math # Note: I use import math just for accuracy of pi and e value
+print("Note: You can use p as 3.141592 or e as 2.718281") 
 
 def my_eval(first_input):
     
@@ -96,7 +94,7 @@ def my_eval(first_input):
     operating = 0
     k = 0
 
-    for from_group_main in enumerate(group_main,0): 
+    for from_group_main in enumerate(group_main,0):
         if type(from_group_main[1]) == list: 
             temp_number = 1 
             for number in enumerate(from_group_main[1],0):  
@@ -194,20 +192,18 @@ def remove_bracket(start):
             break
 
     equation.append(f1[start+1:count_n-1])
-    list_position.append(start+1)
-    list_position.append(count_n-1)
-    position.append(list_position)
-# ----------------------------------------------------------------------------- 
+
+# -----------------------------------------------------------------------------
 
 while 1:
 
-    f1 = input("Calculate: ")
+    f1 = input("Calculate: ") # becareful: 1/-(5+5) = -0.1 is not the same like 1/-1*10 = -10
 
     equation.append(f1[0:])
 
     after_split = find_bracket(f1)
 
-    # ------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
     dict_equation_value = {}
 
@@ -221,20 +217,17 @@ while 1:
 
         elif tof == False:
 
-
-            real_temp_str = "" 
-
+            real_temp_str = ""
             ref_temp_str = "" 
-
             temp_str = ""
-
+            negative = ""
             keep_str = False
             keep_bracket = False
             open_bracket,close_bracket = 0,0
             wait_for_bracket = True
+            
 
-
-            for t1 in enumerate(e1[1],0): 
+            for t1 in enumerate(e1[1],0):
 
                 if t1[1] == ')' and open_bracket != close_bracket:
 
@@ -244,11 +237,18 @@ while 1:
 
                     ref_temp_str = temp_str
                     
-                    for t2 in dict_equation_value: 
+                    for t2 in dict_equation_value:
 
                         if ref_temp_str == t2:
 
-                            real_temp_str += dict_equation_value[t2]
+                            if negative != '*-1':
+
+                                real_temp_str += dict_equation_value[t2]
+
+                            else:
+
+                                real_temp_str += my_eval(dict_equation_value[t2]+negative)
+                                negative = ""
 
                             ref_temp_str = ""
                             temp_str = ""
@@ -265,11 +265,12 @@ while 1:
 
                 elif wait_for_bracket == True and t1[1] != '(':
 
-                    real_temp_str += t1[1]
-
                     if e1[1][t1[0]] == '-' and e1[1][t1[0]+1] == '(':
 
-                        real_temp_str += '1*'
+                        negative = '*-1'
+
+                    else:
+                        real_temp_str += t1[1]
 
                 elif t1[1] == '(' and keep_bracket == True:
 
@@ -280,7 +281,7 @@ while 1:
                         
                     wait_for_bracket = False 
                     keep_bracket = True
-                    keep_str = True 
+                    keep_str = True
                     open_bracket += 1
 
                             
