@@ -2,6 +2,7 @@
 # f1 = 2*(5+3*((2+2-(4/5))*(4-3))) first case that I used to solve this problem
 
 import math # import Pi and e value just for accuracy
+print('you can use p as 3.141592 or e as 2.718281') # example --> calculate: 1*p output: 3.1415926535...
 
 def my_eval(first_input):
     
