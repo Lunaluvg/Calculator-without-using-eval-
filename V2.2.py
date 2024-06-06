@@ -246,8 +246,13 @@ while 1:
                                 real_temp_str += dict_equation_value[t2]
 
                             else:
-
-                                real_temp_str += my_eval(dict_equation_value[t2]+negative)
+                                result_after_negative = my_eval(dict_equation_value[t2]+negative)
+                                
+                                if float(result_after_negative) > 0:
+                                    real_temp_str += "+"+result_after_negative
+                                else:
+                                    real_temp_str += result_after_negative
+                                    
                                 negative = ""
 
                             ref_temp_str = ""
