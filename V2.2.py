@@ -1,6 +1,6 @@
 # Luna calculator V2.2 Now you can use bracket () example 1/(5+5) , 1/-(5+5) or you want more longer 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
 import math 
-print("Note: You can use p as 3.141592 or e as 2.718281") 
+print("Note: You can use p as 3.141592 or e as 2.718281, example --> calculate: 1/p ; output: = 0.3183") 
 
 def my_eval(first_input):
     
