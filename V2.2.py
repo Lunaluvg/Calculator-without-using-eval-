@@ -1,5 +1,5 @@
-# Luna calculator V2.2 Now you can use bracket () example 1/(5+5) , 1/-(5+5) , or you want more longer 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
-import math # Note: I use import math just for accuracy of pi and e value
+# Luna calculator V2.2 Now you can use bracket () example 1/(5+5) , 1/-(5+5) or you want more longer 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
+import math 
 print("Note: You can use p as 3.141592 or e as 2.718281") 
 
 def my_eval(first_input):
@@ -246,22 +246,21 @@ while 1:
                                 real_temp_str += dict_equation_value[t2]
 
                             else:
+
                                 result_after_negative = my_eval(dict_equation_value[t2]+negative)
-                                
-                                if float(result_after_negative) > 0:
+
+                                if float(result_after_negative) > 0 and real_temp_str[-1] != '*':
+
                                     real_temp_str += "+"+result_after_negative
+
                                 else:
                                     real_temp_str += result_after_negative
-                                    
-                                negative = ""
 
-                            ref_temp_str = ""
-                            temp_str = ""
-                            keep_str = False
-                            keep_bracket = False
+                            ref_temp_str,temp_str = "",""
+                            negative = ""
+                            keep_str,keep_bracket = False,False
                             wait_for_bracket = True
-                            open_bracket = 0
-                            close_bracket = 0
+                            open_bracket,close_bracket = 0,0
 
 
                 elif t1[1] != '(' and keep_str == True:
