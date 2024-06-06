@@ -1,4 +1,4 @@
-# Luna calculator V2.3 Now you can do this (Use bracket) !! : 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
+# Luna calculator V2.2 Now you can do this (Use bracket) !! : 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
 # f1 = 2*(5+3*((2+2-(4/5))*(4-3))) first case that I used to solve this problem
 
 import math # import Pi and e value just for accuracy
@@ -95,10 +95,10 @@ def my_eval(first_input):
     operating = 0
     k = 0
 
-    for from_group_main in enumerate(group_main,0): # from_group_main = (2 , [3,5,3])
-        if type(from_group_main[1]) == list: # [3,5,3]
+    for from_group_main in enumerate(group_main,0): 
+        if type(from_group_main[1]) == list: 
             temp_number = 1 
-            for number in enumerate(from_group_main[1],0):  # from_group_main[1] = [3,5,3] , number{round 1} = (0, 3) ; number[1] == 3
+            for number in enumerate(from_group_main[1],0):  
                 
                 if number[0] == len(from_group_main[1]) - 1:
                     group_main_2.append(temp_number)
@@ -163,7 +163,7 @@ def my_eval(first_input):
 equation = []
 position = []
 
-def find_bracket(check_bracket): # case: 2*(5+3*((2+2-(4/5))*(4-3)))
+def find_bracket(check_bracket): 
 
     for check_b in enumerate(check_bracket,0):
 
@@ -196,7 +196,7 @@ def remove_bracket(start):
     list_position.append(start+1)
     list_position.append(count_n-1)
     position.append(list_position)
-# ----------------------------------------------------------------------------- # case: 2*(5+3*((2+2-(4/5))*(4-3)))
+# ----------------------------------------------------------------------------- 
 
 while 1:
 
@@ -206,7 +206,7 @@ while 1:
 
     after_split = find_bracket(f1)
 
-    # -----------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     dict_equation_value = {}
 
@@ -221,7 +221,7 @@ while 1:
         elif tof == False:
 
 
-            real_temp_str = "" # 3.2
+            real_temp_str = "" 
 
             ref_temp_str = "" 
 
@@ -233,7 +233,7 @@ while 1:
             wait_for_bracket = True
 
 
-            for t1 in enumerate(e1[1],0): # t1 = (0 , '-')
+            for t1 in enumerate(e1[1],0): 
 
                 if t1[1] == ')' and open_bracket != close_bracket:
 
@@ -243,7 +243,7 @@ while 1:
 
                     ref_temp_str = temp_str
                     
-                    for t2 in dict_equation_value: # translation from dict
+                    for t2 in dict_equation_value: 
 
                         if ref_temp_str == t2:
 
@@ -277,9 +277,9 @@ while 1:
 
                 elif t1[1] == '(' and keep_bracket == False:
                         
-                    wait_for_bracket = False # f1 = 2*(5+3*(-(2+2-(4/5))*(4-3)))
+                    wait_for_bracket = False 
                     keep_bracket = True
-                    keep_str = True # only in bracket for temp_str
+                    keep_str = True 
                     open_bracket += 1
 
                             
