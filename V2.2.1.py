@@ -1,6 +1,6 @@
-import math # Luna calculator V2.2.1 Now you can use bracket () example 1/(5+5) , 1/-(5+5) or you want more longer 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
-print("Note: You can use p as 3.141592 or e as 2.718281, example --> calculate: 1/p ; output: = 0.3183")
-
+import math # Luna calculator V2.2.1 example 1/(5+5) , 1/-(5+5) or you want more longer 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
+print("Note: You can use p as 3.141592 or e as 2.718281,\n{ example --> calculate: 1/p ; output: = 0.3183, calculate: 5--5 ; output: = 10 }") # Exceptions: the case '(' never close, if you type ee or pp it will error
+print("-------------------------------------------------------------------------------------------------")
 def my_eval(first_input):
     for starting in enumerate(first_input):
         if (starting[1] in '+-*/.') and ( first_input[starting[0]+1] in '+-/*.' and first_input[starting[0]+1] not in "-") or (first_input[-1] in '+-*/'):
@@ -11,6 +11,7 @@ def my_eval(first_input):
         
         elif first_input[starting[0]] == '/' and first_input[starting[0]+1] == '0':
             return "Can not divide by zero!"
+          
     try:
         float(first_input)
         return str(first_input)
@@ -172,10 +173,8 @@ def find_bracket(check_bracket):
 # ----------------------------------------------------------------------------
 
 def remove_bracket(start):
-
     count_open,count_close = 0,0
     count_n = start
-    list_position = []
 
     while True: 
 
@@ -264,8 +263,7 @@ while 1:
                             keep_str = False
                             keep_bracket = False
                             wait_for_bracket = True
-                            open_bracket = 0
-                            close_bracket = 0
+                            open_bracket,close_bracket = 0,0
 
 
                 elif t1[1] != '(' and keep_str == True:
