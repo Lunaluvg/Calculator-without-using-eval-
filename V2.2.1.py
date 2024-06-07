@@ -18,10 +18,10 @@ def my_eval(first_input):
         if first_input.isdigit() == True:
             return str(first_input)
 
-        elif first_input == "p":
+        elif first_input.lower() == "p":
             return str(math.pi)
  
-        elif first_input == "e":
+        elif first_input.lower() == "e":
             return str(math.e)
 
     # checking operators part
