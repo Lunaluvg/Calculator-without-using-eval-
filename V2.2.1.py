@@ -1,5 +1,6 @@
 import math # Luna calculator V2.2.1 Now you can use bracket () example 1/(5+5) , 1/-(5+5) or you want more longer 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/9+6/4))+10*(8/12-5/3)+7*(12/15-(14/10*2)) = -7.530303030303033
 print("Note: You can use p as 3.141592 or e as 2.718281, example --> calculate: 1/p ; output: = 0.3183")
+
 def my_eval(first_input):
     for starting in enumerate(first_input):
         if (starting[1] in '+-*/.') and ( first_input[starting[0]+1] in '+-/*.' and first_input[starting[0]+1] not in "-") or (first_input[-1] in '+-*/'):
@@ -7,7 +8,7 @@ def my_eval(first_input):
         
         elif (starting[1] not in '+-*/.' and (starting[1].lower() != "p" and starting[1].lower() != "e") and starting[1].isdigit() != True) or (first_input[0] in '+*/.'):
             return False
-            
+        
         elif first_input[starting[0]] == '/' and first_input[starting[0]+1] == '0':
             return "Can not divide by zero!"
     try:
@@ -35,7 +36,7 @@ def my_eval(first_input):
         if first_check[1] == "-" and first_check[0] == 0:
             temporary += first_check[1]
 
-        elif first_check[1].isdigit() == True or first_check[1] == "." or (first_check[1].lower() == "p" or first_check[1].lower() == "e") :
+        elif first_check[1].isdigit() == True or first_check[1] == "." or (first_check[1] == "p" or first_check[1] == "e") :
             if first_check[1].lower() == "p":
                 temporary += str(math.pi)
                 already_operate = 0
@@ -161,8 +162,11 @@ equation = []
 position = []
 
 def find_bracket(check_bracket):
+
     for check_b in enumerate(check_bracket,0):
+
         if check_b[1] == "(":
+
             remove_bracket(check_b[0])
 
 # ----------------------------------------------------------------------------
@@ -190,25 +194,26 @@ def remove_bracket(start):
 # -----------------------------------------------------------------------------
 
 while 1:
+
     f1 = input("Calculate: ")
+
     equation.append(f1[0:])
+
     after_split = find_bracket(f1)
 
 # -----------------------------------------------------------------------------
 
     dict_equation_value = {}
 
-    #print(list(reversed(equation)))
-
     for e1 in enumerate(list(reversed(equation)),0):
+        
         tof = my_eval(e1[1])
 
         if type(tof) == str:
+
             dict_equation_value.update({e1[1]:tof})
-            #print(dict_equation_value)
 
         elif tof == False:
-            #print("main:",e1[1])
 
             real_temp_str = "" 
             ref_temp_str = "" 
@@ -222,22 +227,17 @@ while 1:
 
             for t1 in enumerate(e1[1],0):
 
-                #print("part:",t1)
-
                 if t1[1] == ')' and open_bracket != close_bracket:
 
                     close_bracket += 1
 
                 if (close_bracket == open_bracket) and (close_bracket != 0 and open_bracket != 0):
 
-                    #print("temp_str after close == open:",temp_str)
                     ref_temp_str = temp_str
                     
                     for t2 in dict_equation_value: 
 
                         if ref_temp_str == t2:
-
-                            #print("ref_temp_str after matched:",ref_temp_str)
 
                             if negative != True:
 
@@ -246,9 +246,6 @@ while 1:
                             else: # -1*-(-1) = -1
 
                                 result_after_negative = my_eval(dict_equation_value[t2]+'*-1')
-                    
-                                #print("real_temp_str before case 1:",real_temp_str)
-                                #print("result_after_negative:",result_after_negative)
                                 
                                 if float(result_after_negative) > 0 and real_temp_str == "":
                                     
@@ -296,8 +293,6 @@ while 1:
                     keep_str = True 
                     open_bracket += 1
 
-            #print("before calculate:",real_temp_str)
-
             if real_temp_str[0] == "+":
                 real_temp_str = real_temp_str[1:]
 
@@ -305,5 +300,4 @@ while 1:
 
             dict_equation_value.update({e1[1]:result_tof_false})
 
-            #print(dict_equation_value)
     print("=",dict_equation_value[f1])
