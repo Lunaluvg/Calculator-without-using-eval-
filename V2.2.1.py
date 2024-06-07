@@ -158,11 +158,8 @@ equation = []
 position = []
 
 def find_bracket(check_bracket):
-
     for check_b in enumerate(check_bracket,0):
-
         if check_b[1] == "(":
-
             remove_bracket(check_b[0])
 
 # ----------------------------------------------------------------------------
@@ -187,17 +184,11 @@ def remove_bracket(start):
             break
 
     equation.append(f1[start+1:count_n-1])
-    list_position.append(start+1)
-    list_position.append(count_n-1)
-    position.append(list_position)
 # -----------------------------------------------------------------------------
 
 while 1:
-
     f1 = input("Calculate: ")
-
     equation.append(f1[0:])
-
     after_split = find_bracket(f1)
 
 # -----------------------------------------------------------------------------
@@ -207,17 +198,13 @@ while 1:
     #print(list(reversed(equation)))
 
     for e1 in enumerate(list(reversed(equation)),0):
-        
         tof = my_eval(e1[1])
 
         if type(tof) == str:
-
             dict_equation_value.update({e1[1]:tof})
-
             #print(dict_equation_value)
 
         elif tof == False:
-
             #print("main:",e1[1])
 
             real_temp_str = "" 
@@ -258,7 +245,6 @@ while 1:
                                 result_after_negative = my_eval(dict_equation_value[t2]+'*-1')
                     
                                 #print("real_temp_str before case 1:",real_temp_str)
-
                                 #print("result_after_negative:",result_after_negative)
                                 
                                 if float(result_after_negative) > 0 and real_temp_str == "":
