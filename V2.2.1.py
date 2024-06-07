@@ -5,7 +5,7 @@ def my_eval(first_input):
         if (starting[1] in '+-*/.') and ( first_input[starting[0]+1] in '+-/*.' and first_input[starting[0]+1] not in "-") or (first_input[-1] in '+-*/'):
             return False
         
-        elif (starting[1] not in '+-*/.' and (starting[1] != "p" and starting[1] != "e") and starting[1].isdigit() != True) or (first_input[0] in '+*/.'):
+        elif (starting[1] not in '+-*/.' and (starting[1].lower() != "p" and starting[1].lower() != "e") and starting[1].isdigit() != True) or (first_input[0] in '+*/.'):
             return False
             
         elif first_input[starting[0]] == '/' and first_input[starting[0]+1] == '0':
@@ -35,11 +35,11 @@ def my_eval(first_input):
         if first_check[1] == "-" and first_check[0] == 0:
             temporary += first_check[1]
 
-        elif first_check[1].isdigit() == True or first_check[1] == "." or (first_check[1] == "p" or first_check[1] == "e") :
-            if first_check[1] == "p":
+        elif first_check[1].isdigit() == True or first_check[1] == "." or (first_check[1].lower() == "p" or first_check[1].lower() == "e") :
+            if first_check[1].lower() == "p":
                 temporary += str(math.pi)
                 already_operate = 0
-            elif first_check[1] == "e":
+            elif first_check[1].lower() == "e":
                 temporary += str(math.e)
                 already_operate = 0
             else:
