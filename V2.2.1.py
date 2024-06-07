@@ -303,4 +303,4 @@ while 1:
             dict_equation_value.update({e1[1]:result_tof_false})
 
             #print(dict_equation_value)
-    #print("=",dict_equation_value[f1])
+    print("=",dict_equation_value[f1])
