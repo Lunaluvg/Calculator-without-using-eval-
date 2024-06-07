@@ -251,7 +251,7 @@ while 1:
                                     
                                     real_temp_str += "+"+result_after_negative
                                     
-                                elif float(result_after_negative) > 0 and real_temp_str[-1] != '*': # fixed case -(5)-(-5) = 0
+                                elif float(result_after_negative) > 0 and (real_temp_str[-1] != '*' and real_temp_str[-1] != '/'): # fixed case -(5)-(-5) = 0
 
                                     real_temp_str += "+"+result_after_negative
 
