@@ -7,6 +7,9 @@ def my_eval(first_input):
         
         elif (starting[1] not in '+-*/.' and (starting[1] != "p" and starting[1] != "e") and starting[1].isdigit() != True) or (first_input[0] in '+*/.'):
             return False
+            
+        elif first_input[starting[0]] == '/' and first_input[starting[0]+1] == '0':
+            return "Can not divide by zero!"
     try:
         float(first_input)
         return str(first_input)
