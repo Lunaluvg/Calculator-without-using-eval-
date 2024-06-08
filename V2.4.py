@@ -271,7 +271,7 @@ def parenthesis(equation_2):
                 in_expo = False
                 expo,base = "","" 
 
-                for ex in enumerate(real_temp_str,0): # 2.5^-4 , 2.5^4 , 2^5+4 ; error case 3*2*2.5^-5+3.14
+                for ex in enumerate(real_temp_str,0):
 
                     if (ex[1].isdigit() == True or ex[1] == '.') and (in_expo == False):
 
