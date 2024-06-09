@@ -1,14 +1,14 @@
 # Luna calculator V2.4 now you can do the exponents stuff instead of using ** , I use '^' example: Calculate: 2^5 output: = 32 or -(19/15-(16/12^-2)) = 2302.733
 import math 
 def my_eval(first_input):
-    
+
     for starting in enumerate(first_input):
         if (starting[1] in '+-*/.') and ( first_input[starting[0]+1] in '+-/*.' and first_input[starting[0]+1] not in "-") or (first_input[-1] in '+-*/'):
             return False
         
-        elif (starting[1] not in '+-*/.' and (starting[1] != "p" and starting[1] != "e") and starting[1].isdigit() != True) or (first_input[0] in '+*/.'):
+        elif (starting[1] not in '+-*/.' and (starting[1].lower() != "p" and starting[1].lower() != "e") and starting[1].isdigit() != True) or (first_input[0] in '+*/.'):
             return False
-          
+        
     try:
         float(first_input)
         return str(first_input)
@@ -323,7 +323,31 @@ def parenthesis(equation_2):
     print("=",calculated)
 
 while 1:
+    can_cal = False
     f1 = input("Calculate: ")
-    equation_1.append(f1[0:])
-    after_split = find_bracket(f1)
-    parenthesis(equation_1)
+
+    for starting in enumerate(f1):
+
+        if (starting[1] in '+-*/.') and ( f1[starting[0]+1] in '+-/*' and f1[starting[0]+1] not in "-") or (f1[-1] in '+-*/('):
+            can_cal = False
+            break
+
+        elif (starting[1] not in '+-*/.' and starting[1] not in 'pe()^' and starting[1].isdigit() != True) or (f1[0] in ')+*/.'):
+            can_cal = False
+            break
+
+        elif (f1[starting[0]] == '/' and f1[starting[0]+1] == '0'):
+            can_cal = False
+            break
+
+        else:
+            can_cal = True
+
+    if can_cal == True:
+        equation_1.append(f1[0:])
+        after_split = find_bracket(f1)
+        parenthesis(equation_1)
+
+    else:
+        print("Can not calculate, try again!")
+        print()
