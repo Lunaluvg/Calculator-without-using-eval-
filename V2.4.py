@@ -275,7 +275,10 @@ def parenthesis(equation_2):
 
                 for ex in enumerate(real_temp_str,0):
 
-                    if (ex[1].isdigit() == True or ex[1] == '.') and (in_expo == False):
+                    if ex[1] == '-' and in_expo == False:
+                        temp_cal += ex[1]
+
+                    elif (ex[1].isdigit() == True or ex[1] == '.') and (in_expo == False):
 
                         temp_cal += ex[1]
 
@@ -307,14 +310,13 @@ def parenthesis(equation_2):
 
                             result_of_power = pow(float(base),float(expo))
                             before_eval += str(format(result_of_power,'.35f'))
-                            base,expo = "",""
 
                     elif ex[1] in '+-*/' and in_expo == True:
 
                         result_of_power = pow(float(base),float(expo))
                         before_eval += str(format(result_of_power,'.35f'))
                         before_eval += ex[1]
-                        base,expo = "",""
+
                         in_expo = False
 
                 result_tof_false = my_eval(before_eval)
@@ -331,9 +333,11 @@ while 1:
         if (starting[1] in '+-*/.') and ( f1[starting[0]+1] in '+-/*' and f1[starting[0]+1] not in "-") or (f1[-1] in '+-*/('):
             can_cal = False
             break
+
         elif (starting[1] not in '+-*/.' and starting[1] not in 'pe()^' and starting[1].isdigit() != True) or (f1[0] in ')+*/.'):
             can_cal = False
             break
+
         else:
             can_cal = True
 
