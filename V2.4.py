@@ -8,7 +8,6 @@ def my_eval(first_input):
         
         elif (starting[1] not in '+-*/.' and (starting[1].lower() != "p" and starting[1].lower() != "e") and starting[1].isdigit() != True) or (first_input[0] in '+*/.'):
             return False
-        
     try:
         float(first_input)
         return str(first_input)
@@ -310,13 +309,14 @@ def parenthesis(equation_2):
 
                             result_of_power = pow(float(base),float(expo))
                             before_eval += str(format(result_of_power,'.35f'))
+                            expo,base = "",""
 
                     elif ex[1] in '+-*/' and in_expo == True:
 
                         result_of_power = pow(float(base),float(expo))
                         before_eval += str(format(result_of_power,'.35f'))
                         before_eval += ex[1]
-
+                        expo,base = "",""
                         in_expo = False
 
                 result_tof_false = my_eval(before_eval)
