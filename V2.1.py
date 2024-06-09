@@ -1,6 +1,4 @@
-# !!(double operator)!! New updated , Now you can do this!! 1--1 = 2 or 1+-5*-7--5 = 41 etc.
-# Luna calculator V2.1
-
+# Luna calculator V2.1 
 def checking_operator(first_input):
     # checking operators part
     list_number = []
