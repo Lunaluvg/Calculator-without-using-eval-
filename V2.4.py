@@ -263,6 +263,8 @@ def parenthesis(equation_2):
 
             if real_temp_str[0] == "+": 
                 real_temp_str = real_temp_str[1:]
+                result_tof_false = my_eval(real_temp_str)
+                dict_equation_value.update({e1[1]:result_tof_false})
 
             elif real_temp_str[0] != "+" or '^' in real_temp_str:
 
@@ -314,10 +316,11 @@ def parenthesis(equation_2):
 
                         in_expo = False
 
-            result_tof_false = my_eval(before_eval)
-            dict_equation_value.update({e1[1]:result_tof_false})
+                result_tof_false = my_eval(before_eval)
+                dict_equation_value.update({e1[1]:result_tof_false})
 
-    print("=",dict_equation_value[f1])
+    calculated = float(dict_equation_value[f1])
+    print("=",calculated)
 
 while 1:
     f1 = input("Calculate: ")
