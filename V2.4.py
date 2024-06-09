@@ -223,7 +223,7 @@ def parenthesis(equation_2):
                                 if float(result_after_negative) > 0 and real_temp_str == "":
                                     real_temp_str += "+"+result_after_negative
                                     
-                                elif float(result_after_negative) > 0 and (real_temp_str[-1] != '*' and real_temp_str[-1] != '/'):
+                                elif float(result_after_negative) > 0 and (real_temp_str[-1] != '*' and real_temp_str[-1] != '/' and real_temp_str[-1] != '^'):
 
                                     real_temp_str += "+"+result_after_negative
                                     
