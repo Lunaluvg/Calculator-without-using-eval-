@@ -336,10 +336,6 @@ while 1:
             can_cal = False
             break
 
-        elif (f1[starting[0]] == '/' and f1[starting[0]+1] == '0'):
-            can_cal = False
-            break
-
         else:
             can_cal = True
 
