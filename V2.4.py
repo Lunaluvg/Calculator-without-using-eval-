@@ -8,6 +8,7 @@ def my_eval(first_input):
         
         elif (starting[1] not in '+-*/.' and (starting[1].lower() != "p" and starting[1].lower() != "e") and starting[1].isdigit() != True) or (first_input[0] in '+*/.'):
             return False
+        
     try:
         float(first_input)
         return str(first_input)
@@ -156,7 +157,7 @@ def my_eval(first_input):
 
 equation_1 = []
 
-def find_bracket(check_bracket): # case: 2*(5+3*((2+2-(4/5))*(4-3)))
+def find_bracket(check_bracket):
 
     for check_b in enumerate(check_bracket,0):
 
@@ -197,13 +198,13 @@ def parenthesis(equation_2):
             real_temp_str = ""
             ref_temp_str = "" 
             temp_str = ""
-            negative = False
-            keep_str = False
-            keep_bracket = False
+            infront_bracket_negative = False
+            negative,have_bracket = False,False
+            keep_str,keep_bracket = False,False
             open_bracket,close_bracket = 0,0
             wait_for_bracket = True
             
-            for t1 in enumerate(e1[1],0): # t1 = (0 , '-')
+            for t1 in enumerate(e1[1],0):
                 if t1[1] == ')' and open_bracket != close_bracket:
                     close_bracket += 1
 
@@ -236,7 +237,6 @@ def parenthesis(equation_2):
                             wait_for_bracket = True
                             open_bracket,close_bracket = 0,0
 
-
                 elif t1[1] != '(' and keep_str == True:
                     temp_str += t1[1]
 
@@ -244,7 +244,7 @@ def parenthesis(equation_2):
 
                     if e1[1][t1[0]] == '-' and e1[1][t1[0]+1] == '(':
                         negative = True
-
+                        infront_bracket_negative = True
                     else:
                         real_temp_str += t1[1]
 
@@ -254,13 +254,13 @@ def parenthesis(equation_2):
                     open_bracket += 1
 
                 elif t1[1] == '(' and keep_bracket == False:
-                        
+                    have_bracket = True
                     wait_for_bracket = False 
                     keep_bracket = True
                     keep_str = True 
                     open_bracket += 1
 
-            if real_temp_str[0] == "+": 
+            if real_temp_str[0] == "+" and '^' not in real_temp_str: 
                 real_temp_str = real_temp_str[1:]
                 result_tof_false = my_eval(real_temp_str)
                 dict_equation_value.update({e1[1]:result_tof_false})
@@ -269,7 +269,7 @@ def parenthesis(equation_2):
 
                 before_eval = ""
                 temp_cal = ""
-                in_expo = False
+                in_expo,even_expo = False,False
                 expo,base = "","" 
 
                 for ex in enumerate(real_temp_str,0):
@@ -308,22 +308,46 @@ def parenthesis(equation_2):
                         if (ex[0] == len(real_temp_str) - 1) and (in_expo == True):
 
                             result_of_power = pow(float(base),float(expo))
-                            before_eval += str(format(result_of_power,'.35f'))
+                            if float(expo)%2 == 0.0:
+                                even_expo = True
+                            else:
+                                even_expo = False
+                            
+                            if (even_expo == False and float(base) < 0 and infront_bracket_negative == True) or (even_expo == True and float(base) > 0 and infront_bracket_negative == False) or (even_expo == True and float(base) < 0 and infront_bracket_negative == False and have_bracket == True):
+                                before_eval += str(format(result_of_power,'.35f'))
+                            else:
+                                before_eval += '-'+str(format(result_of_power,'.35f'))
+
                             expo,base = "",""
 
                     elif ex[1] in '+-*/' and in_expo == True:
 
                         result_of_power = pow(float(base),float(expo))
-                        before_eval += str(format(result_of_power,'.35f'))
+                        if float(expo)%2 == 0.0:
+                            even_expo = True
+                        else:
+                            even_expo = False
+                            
+                        if (even_expo == False and float(base) < 0 and infront_bracket_negative == True) or (even_expo == True and float(base) > 0 and infront_bracket_negative == False) or (even_expo == True and float(base) < 0 and infront_bracket_negative == False and have_bracket == True):
+                            before_eval += str(format(result_of_power,'.35f'))
+                
+                        else:
+                            before_eval += '-'+str(format(result_of_power,'.35f'))
+
                         before_eval += ex[1]
                         expo,base = "",""
                         in_expo = False
 
-                result_tof_false = my_eval(before_eval)
-                dict_equation_value.update({e1[1]:result_tof_false})
+                if before_eval[0] == '+':
+                    before_eval = before_eval[1:]
+                    result_tof_false = my_eval(before_eval)
+                    dict_equation_value.update({e1[1]:result_tof_false})
+                else:
+                    result_tof_false = my_eval(before_eval)
+                    dict_equation_value.update({e1[1]:result_tof_false})
+                infront_bracket_negative = False
 
-    calculated = float(dict_equation_value[f1])
-    print("=",calculated)
+    print("=",float(dict_equation_value[f1]))
 
 while 1:
     can_cal = False
