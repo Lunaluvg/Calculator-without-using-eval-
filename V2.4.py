@@ -5,12 +5,13 @@ def my_eval(first_input):
     for starting in enumerate(first_input):
         if (starting[1] in '+-*/.') and ( first_input[starting[0]+1] in '+-/*.' and first_input[starting[0]+1] not in "-") or (first_input[-1] in '+-*/'):
             return False
+        
         elif (starting[1] not in '+-*/.' and (starting[1] not in "peij") and starting[1].isdigit() != True) or (first_input[0] in '+*/.'):
             return False
     try:
         float(first_input)
         return str(first_input)
-      
+
     except ValueError:
         if first_input.isdigit() == True:
             return str(first_input)
@@ -90,10 +91,10 @@ def my_eval(first_input):
     operating = 0
     k = 0
 
-    for from_group_main in enumerate(group_main,0): # from_group_main = (2 , [3,5,3])
-        if type(from_group_main[1]) == list: # [3,5,3]
+    for from_group_main in enumerate(group_main,0):
+        if type(from_group_main[1]) == list:
             temp_number = 1 
-            for number in enumerate(from_group_main[1],0):  # from_group_main[1] = [3,5,3] , number{round 1} = (0, 3) ; number[1] == 3
+            for number in enumerate(from_group_main[1],0): 
                 
                 if number[0] == len(from_group_main[1]) - 1:
                     group_main_2.append(temp_number)
@@ -211,7 +212,11 @@ def simplify_negative(simplify,e1):
             temp_num = ''
 
         elif last_check[1] == '-' and simplify[last_check[0]-1].isdigit() == True:
-            if count_negative % 2 == 0:
+
+            if count_negative % 2 == 0 and count_negative != 0:
+                last_anwser += '+' + temp_num
+                
+            elif count_negative % 2 == 0:
                 last_anwser += temp_num
             else:
                 last_anwser += '-'+temp_num
@@ -221,7 +226,10 @@ def simplify_negative(simplify,e1):
 
         elif last_check[1].isdigit() != True and last_check[1] != '-':
 
-            if count_negative % 2 == 0:
+            if count_negative % 2 == 0 and count_negative != 0:
+                last_anwser += '+' + temp_num + last_check[1]
+
+            elif count_negative % 2 == 0:
                 last_anwser += temp_num + last_check[1]
 
             elif count_negative % 2 != 0:
@@ -285,7 +293,7 @@ def parenthesis(equation_2):
                     else:
                         real_temp_str += t1[1]
 
-                elif t1[1] == '(' and keep_bracket == True: # case 5
+                elif t1[1] == '(' and keep_bracket == True:
 
                     temp_str += t1[1]
                     open_bracket += 1
