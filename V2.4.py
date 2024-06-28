@@ -1,5 +1,8 @@
-import math # 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/-9+6/4))+10*(8^-2/12-5/3)+7*(12/15-(14/10*2)) = 1.5736268939393856
-
+import math 
+# example
+# 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/-9+6/4))+10*(8^-2/12-5/3)+7*(12/15-(14/10*2)) = 1.5736268939393856
+# (((1712/10)-(-(19+8/11*(13/9-(8/716))/6))+22)-(10*(16/13+14/8))-(11*(20/15-(13/7))))+(15*(21/18-(11/12^-7))) = -5912248114.172058
+# ((((21+13/12*(15/10-(19/7^-6)))-(8/7+11*(14/9-9/5)))/(7^-9)-(12*(16/13+10/8)))+(6*(-(22/17-(20/15^-4)))))-(29/21*(((25+11/16*(21/12-(14/7^-8)))-(13/9-8*(20/16+13/11)))+(10*(15/18-9/7))-7*(-(21/14-(17/11^-5))))) = ?
 def my_eval(first_input):
     
     for starting in enumerate(first_input):
@@ -91,10 +94,10 @@ def my_eval(first_input):
     operating = 0
     k = 0
 
-    for from_group_main in enumerate(group_main,0):
-        if type(from_group_main[1]) == list:
+    for from_group_main in enumerate(group_main,0): # from_group_main = (2 , [3,5,3])
+        if type(from_group_main[1]) == list: # [3,5,3]
             temp_number = 1 
-            for number in enumerate(from_group_main[1],0): 
+            for number in enumerate(from_group_main[1],0):  # from_group_main[1] = [3,5,3] , number{round 1} = (0, 3) ; number[1] == 3
                 
                 if number[0] == len(from_group_main[1]) - 1:
                     group_main_2.append(temp_number)
@@ -215,7 +218,7 @@ def simplify_negative(simplify):
 
             if count_negative % 2 == 0 and count_negative != 0:
                 last_anwser += '+' + temp_num
-                
+
             elif count_negative % 2 == 0:
                 last_anwser += temp_num
             else:
@@ -249,119 +252,112 @@ def simplify_negative(simplify):
 def parenthesis(equation_2):
 
     for e1 in enumerate(list(reversed(equation_2)),0):
-        tof = my_eval(e1[1])
+        
+        real_temp_str = ""
+        temp_str = ""
+        keep_str,keep_bracket,have_bracket = False,False,False
+        open_bracket,close_bracket = 0,0
+        wait_for_bracket = True
+        
+        for t1 in enumerate(e1[1],0):
 
-        if type(tof) == str:
-            dict_equation_value.update({e1[1]:tof})
+            if t1[1] == ')' and open_bracket != close_bracket:
+                close_bracket += 1
 
-        elif tof == False:
+            if (close_bracket == open_bracket) and (close_bracket != 0 and open_bracket != 0):
+                
+                for t2 in dict_equation_value:
+                    if temp_str == t2:
+                        real_temp_str += dict_equation_value[t2]
+                        temp_str = ""
+                        keep_str = False
+                        keep_bracket = False
+                        wait_for_bracket = True
+                        open_bracket,close_bracket = 0,0
 
-            real_temp_str = ""
-            temp_str = ""
-            keep_str = False
-            keep_bracket = False
-            open_bracket,close_bracket = 0,0
-            wait_for_bracket = True
-            
-            for t1 in enumerate(e1[1],0):
+            elif t1[1] != '(' and keep_str == True:
+                temp_str += t1[1]
 
-                if t1[1] == ')' and open_bracket != close_bracket:
+            elif wait_for_bracket == True and t1[1] != '(':
 
-                    close_bracket += 1
+                if t1[1] == '-':
+                    real_temp_str += t1[1]
+                else:
+                    real_temp_str += t1[1]
 
-                if (close_bracket == open_bracket) and (close_bracket != 0 and open_bracket != 0):
+            elif t1[1] == '(' and keep_bracket == True: # case 5
+                temp_str += t1[1]
+                open_bracket += 1
+
+            elif t1[1] == '(' and keep_bracket == False:
                     
-                    for t2 in dict_equation_value:
+                wait_for_bracket = False 
+                keep_bracket,keep_str,have_bracket = True,True,True
+                open_bracket += 1
 
-                        if temp_str == t2:
-                            real_temp_str += dict_equation_value[t2]
+        if '^' in real_temp_str:
+            last_anwser_expo,temp_num_ex = "","" 
+            expo,base = '',''
+            in_expo,skip = False,False
 
-                            temp_str = ""
-                            keep_str = False
-                            keep_bracket = False
-                            wait_for_bracket = True
-                            open_bracket,close_bracket = 0,0
+            for check_expo in enumerate(real_temp_str,0):
+                if skip == True:
+                    skip = False
+                    continue
 
-                elif t1[1] != '(' and keep_str == True:
+                elif (check_expo[1].isdigit() == True or check_expo[1] == '.') and (in_expo == False):
+                    temp_num_ex += check_expo[1]
+                    if check_expo[0] == len(real_temp_str) - 1:
+                        last_anwser_expo += temp_num_ex
 
-                    temp_str += t1[1]
+                elif check_expo[1] in '+-*/' and in_expo == False:
+                    last_anwser_expo += temp_num_ex + check_expo[1]
+                    temp_num_ex = ''
 
-                elif wait_for_bracket == True and t1[1] != '(':
+                elif in_expo == True and check_expo[1] == '-' and real_temp_str[check_expo[0]+1] == '-' and real_temp_str[check_expo[0]-1] == '^':
+                    skip = True
 
-                    if t1[1] == '-':
-                        real_temp_str += t1[1]
+                elif in_expo == True and check_expo[1] == '-' and real_temp_str[check_expo[0]-1] == '^':
+                    expo += '-'
+
+                elif check_expo[1] in '+-*/' and in_expo == True:
+
+                    if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
+                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.15f'))
+
                     else:
-                        real_temp_str += t1[1]
+                        last_anwser_expo += str(format(pow(float(base),float(expo)),'.15f'))
 
-                elif t1[1] == '(' and keep_bracket == True:
+                    last_anwser_expo += check_expo[1]
+                    in_expo = False
+                    expo,base = '',''
 
-                    temp_str += t1[1]
-                    open_bracket += 1
+                elif (in_expo == True) and (check_expo[1].isdigit() == True or check_expo[1] == '.'):
+                    expo += check_expo[1]
 
-                elif t1[1] == '(' and keep_bracket == False:
-                        
-                    wait_for_bracket = False 
-                    keep_bracket,keep_str = True,True
-                    open_bracket += 1
+                    if check_expo[0] == len(real_temp_str) - 1:
 
-            if '^' in real_temp_str:
+                        if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
+                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.15f'))
+                        else:
+                            last_anwser_expo += str(format(pow(float(base),float(expo)),'.15f'))
 
-                last_anwser_expo,temp_num_ex = "","" 
-                expo,base = '',''
-                in_expo,skip = False,False
-
-                for check_expo in enumerate(real_temp_str,0):
-
-                    if skip == True:
-                        skip = False
-                        continue
-
-                    elif (check_expo[1].isdigit() == True or check_expo[1] == '.') and (in_expo == False):
-                        temp_num_ex += check_expo[1]
-
-                        if check_expo[0] == len(real_temp_str) - 1:
-                            last_anwser_expo += temp_num_ex
-
-                    elif check_expo[1] in '+-*/' and in_expo == False:
-
-                        last_anwser_expo += temp_num_ex + check_expo[1]
-                        temp_num_ex = ''
-
-                    elif in_expo == True and check_expo[1] == '-' and real_temp_str[check_expo[0]+1] == '-' and real_temp_str[check_expo[0]-1] == '^':
-                        skip = True
-
-                    elif in_expo == True and check_expo[1] == '-' and real_temp_str[check_expo[0]-1] == '^':
-                        expo += '-'
-
-                    elif check_expo[1] in '+-*/' and in_expo == True:
-                        result_pow = pow(float(base),float(expo))
-                        last_anwser_expo += str(format(result_pow,'.25f'))
-                        last_anwser_expo += check_expo[1]
                         in_expo = False
                         expo,base = '',''
 
-                    elif (in_expo == True) and (check_expo[1].isdigit() == True or check_expo[1] == '.'):
+                elif check_expo[1] == '^': # 8^-2/12/3-5
+                    in_expo = True
+                    base += temp_num_ex
+                    temp_num_ex = ''
 
-                        expo += check_expo[1]
+            dict_equation_value.update({e1[1]:my_eval(simplify_negative(last_anwser_expo))})
 
-                        if check_expo[0] == len(real_temp_str) - 1:
+        else:
+            dict_equation_value.update({e1[1]:my_eval(simplify_negative(real_temp_str))})
 
-                            result_pow = pow(float(base),float(expo))
-                            last_anwser_expo += str(format(result_pow,'.25f'))
-                            in_expo = False
-                            expo,base = '',''
-
-                    elif check_expo[1] == '^': # 8^-2/12/3-5
-                        in_expo = True
-                        base += temp_num_ex
-                        temp_num_ex = ''
-
-                dict_equation_value.update({e1[1]:my_eval(last_anwser_expo)})
-
-            else:
-                dict_equation_value.update({e1[1]:my_eval(simplify_negative(real_temp_str))})
-
+    print()
     print("=",float(dict_equation_value[f1]))
+    print()
 
 while 1:
     can_cal = False
