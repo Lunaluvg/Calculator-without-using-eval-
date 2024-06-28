@@ -182,7 +182,7 @@ def remove_bracket(start):
 
     equation_1.append(f1[start+1:count_n-1])
 
-def simplify_negative(simplify,e1):
+def simplify_negative(simplify):
 
     last_anwser = "" 
     temp_num = "" 
@@ -359,7 +359,7 @@ def parenthesis(equation_2):
                 dict_equation_value.update({e1[1]:my_eval(last_anwser_expo)})
 
             else:
-                dict_equation_value.update({e1[1]:my_eval(simplify_negative(real_temp_str,e1[1]))})
+                dict_equation_value.update({e1[1]:my_eval(simplify_negative(real_temp_str))})
 
     print("=",float(dict_equation_value[f1]))
 
