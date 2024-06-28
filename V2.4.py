@@ -115,7 +115,7 @@ def my_eval(first_input):
                         try:
                             temp_number += number[1] / from_group_main[1][number[0]+1]
                         except Exception:
-                            break
+                            return False
 
                     operating = 1
 
@@ -128,7 +128,7 @@ def my_eval(first_input):
                         try:
                             temp_number /= from_group_main[1][number[0]+1]
                         except Exception:
-                            break
+                            return False
                 k += 1
         else:
             group_main_2.append(from_group_main[1])
@@ -245,11 +245,16 @@ def simplify_negative(simplify):
             count_negative += 1
 
         first_time = False
-        
-    return last_anwser
 
+    if my_eval(last_anwser) == False:
+        return False
+    
+    else:
+        return last_anwser
 # ----------------------------------------------------------------------------- 
 def parenthesis(equation_2):
+
+    divide_by_zero = False
 
     for e1 in enumerate(list(reversed(equation_2)),0):
         
@@ -347,20 +352,31 @@ def parenthesis(equation_2):
                         in_expo = False
                         expo,base = '',''
 
-                elif check_expo[1] == '^': # 8^-2/12/3-5
+                elif check_expo[1] == '^':
                     in_expo = True
                     base += temp_num_ex
                     temp_num_ex = ''
 
-            dict_equation_value.update({e1[1]:my_eval(simplify_negative(last_anwser_expo))})
+            after_simplify = simplify_negative(last_anwser_expo)
+
+            if after_simplify == False:
+                divide_by_zero = True
+                break
+            else:
+                dict_equation_value.update({e1[1]:my_eval(after_simplify)})
 
         else:
-            dict_equation_value.update({e1[1]:my_eval(simplify_negative(real_temp_str))})
+            after_simplify = simplify_negative(real_temp_str)
 
-    print()
-    print("=",float(dict_equation_value[f1]))
-    print()
+            if after_simplify == False:
+                divide_by_zero = True
+                break
+            else:
+                dict_equation_value.update({e1[1]:my_eval(after_simplify)})
 
+    if divide_by_zero == True:
+        return False
+    
 while 1:
     can_cal = False
     f1 = input("Calculate: ")
@@ -378,7 +394,18 @@ while 1:
     if can_cal == True:
         equation_1.append(f1[0:])
         after_split = find_bracket(f1)
-        parenthesis(equation_1)
+        after_parenthesis = parenthesis(equation_1)
+
+        if after_parenthesis == False:
+            equation_1 = []
+            print()
+            print('Divide by zero detected!')
+            print()
+        else:
+            print()
+            print("=",float(dict_equation_value[f1]))
+            print()
     else:
+        print()
         print("Can not calculate, try again!")
         print()
