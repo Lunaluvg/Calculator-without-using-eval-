@@ -292,8 +292,10 @@ def parenthesis(equation_2):
             elif t1[1] == '(' and keep_bracket == False:
                     
                 wait_for_bracket = False 
-                keep_bracket,keep_str,have_bracket = True,True,True
+                keep_bracket,keep_str = True,True
                 open_bracket += 1
+
+        if ')^' in e1[1]: have_bracket = True
 
         if '^' in real_temp_str:
             last_anwser_expo,temp_num_ex = "","" 
