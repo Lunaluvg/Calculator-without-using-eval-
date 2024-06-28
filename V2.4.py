@@ -2,9 +2,7 @@ import math
 # example
 # 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/-9+6/4))+10*(8^-2/12-5/3)+7*(12/15-(14/10*2)) = 1.5736268939393856
 # (((1712/10)-(-(19+8/11*(13/9-(8/716))/6))+22)-(10*(16/13+14/8))-(11*(20/15-(13/7))))+(15*(21/18-(11/12^-7))) = -5912248114.172058
-# ((((21+13/12*(15/10-(19/7^-6)))-(8/7+11*(14/9-9/5)))/(7^-9)-(12*(16/13+10/8)))+(6*(-(22/17-(20/15^-4)))))-(29/21*(((25+11/16*(21/12-(14/7^-8)))-(13/9-8*(20/16+13/11)))+(10*(15/18-9/7))-7*(-(21/14-(17/11^-5))))) = ?
 def my_eval(first_input):
-    
     for starting in enumerate(first_input):
         if (starting[1] in '+-*/.') and ( first_input[starting[0]+1] in '+-/*.' and first_input[starting[0]+1] not in "-") or (first_input[-1] in '+-*/'):
             return False
@@ -385,11 +383,39 @@ while 1:
         if (starting[1] in '+-*/.') and ( f1[starting[0]+1] in '+-/*' and f1[starting[0]+1] not in "-") or (f1[-1] in '+-*/('):
             can_cal = False
             break
+
         elif (starting[1] not in '+-*/.' and starting[1] not in 'pe()^' and starting[1].isdigit() != True) or (f1[0] in ')+*/.'):
             can_cal = False
             break
+
+        elif '()' in f1 or 'ee' in f1 or 'pp' in f1 or 'pe' in f1 or 'ep' in f1:
+            can_cal = False
+            break
+
         else:
-            can_cal = True
+            open_b = 0
+            close_b = 0
+
+            for check_bracket in f1:
+                if check_bracket == '(':
+                    open_b += 1
+                elif check_bracket == ')':
+                    close_b += 1
+
+            if close_b == open_b:
+                can_cal = True
+
+            else:
+                if open_b > close_b:
+                    print()
+                    print("-->  '(' was never closed  <--")
+
+                elif open_b < close_b:
+                    print()
+                    print("-->  '(' was never opened  <--")
+
+                can_cal = False
+                break
 
     if can_cal == True:
         equation_1.append(f1[0:])
