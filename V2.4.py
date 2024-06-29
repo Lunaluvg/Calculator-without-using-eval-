@@ -2,7 +2,9 @@ import math
 # example
 # 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/-9+6/4))+10*(8^-2/12-5/3)+7*(12/15-(14/10*2)) = 1.5736268939393856
 # (((1712/10)-(-(19+8/11*(13/9-(8/716))/6))+22)-(10*(16/13+14/8))-(11*(20/15-(13/7))))+(15*(21/18-(11/12^-7))) = -5912248114.172058
+
 def my_eval(first_input):
+    
     for starting in enumerate(first_input):
         if (starting[1] in '+-*/.') and ( first_input[starting[0]+1] in '+-/*.' and first_input[starting[0]+1] not in "-") or (first_input[-1] in '+-*/'):
             return False
@@ -92,10 +94,10 @@ def my_eval(first_input):
     operating = 0
     k = 0
 
-    for from_group_main in enumerate(group_main,0): # from_group_main = (2 , [3,5,3])
-        if type(from_group_main[1]) == list: # [3,5,3]
+    for from_group_main in enumerate(group_main,0):
+        if type(from_group_main[1]) == list:
             temp_number = 1 
-            for number in enumerate(from_group_main[1],0):  # from_group_main[1] = [3,5,3] , number{round 1} = (0, 3) ; number[1] == 3
+            for number in enumerate(from_group_main[1],0):
                 
                 if number[0] == len(from_group_main[1]) - 1:
                     group_main_2.append(temp_number)
@@ -155,8 +157,7 @@ def my_eval(first_input):
                 final -= group_main_2[j2+1]
 
         return str(final)
-
-
+        
 equation_1 = []
 dict_equation_value = {}
 
@@ -180,7 +181,7 @@ def remove_bracket(start):
         count_n += 1
         if count_close == count_open:
             break
-
+            
     equation_1.append(f1[start+1:count_n-1])
 
 def simplify_negative(simplify):
@@ -310,8 +311,17 @@ def parenthesis(equation_2):
                     skip = False
                     continue
 
-                elif (check_expo[1].isdigit() == True or check_expo[1] == '.') and (in_expo == False):
-                    temp_num_ex += check_expo[1]
+                elif (check_expo[1].isdigit() == True or check_expo[1] == '.' or check_expo[1] in 'pe') and (in_expo == False):
+
+                    if check_expo[1] == 'p':
+                        temp_num_ex += str(math.pi)
+
+                    elif check_expo[1] == 'e':
+                        temp_num_ex += str(math.e)
+
+                    else:
+                        temp_num_ex += check_expo[1]
+
                     if check_expo[0] == len(real_temp_str) - 1:
                         last_anwser_expo += temp_num_ex
 
@@ -337,8 +347,15 @@ def parenthesis(equation_2):
                     in_expo = False
                     expo,base = '',''
 
-                elif (in_expo == True) and (check_expo[1].isdigit() == True or check_expo[1] == '.'):
-                    expo += check_expo[1]
+                elif (in_expo == True) and (check_expo[1].isdigit() == True or check_expo[1] == '.' or check_expo[1] in 'pe'):
+
+                    if check_expo[1] == 'p':
+                        expo += str(math.pi)
+
+                    elif check_expo[1] == 'e':
+                        expo += str(math.e)
+                    else:
+                        expo += check_expo[1]
 
                     if check_expo[0] == len(real_temp_str) - 1:
 
@@ -380,7 +397,7 @@ while 1:
     f1 = input("Calculate: ")
 
     for starting in enumerate(f1):
-        if (starting[1] in '+-*/.') and ( f1[starting[0]+1] in '+-/*' and f1[starting[0]+1] not in "-") or (f1[-1] in '+-*/('):
+        if (starting[1] in '+-*/.') and ( f1[starting[0]+1] in '+-/*' and f1[starting[0]+1] not in "-") or (f1[-1] in '^+-*/('):
             can_cal = False
             break
 
@@ -425,7 +442,7 @@ while 1:
         if after_parenthesis == False:
             equation_1 = []
             print()
-            print('Divide by zero detected!')
+            print(':Divide by zero detected!')
             print()
         else:
             print()
@@ -433,5 +450,5 @@ while 1:
             print()
     else:
         print()
-        print("Can not calculate, try again!")
+        print(":Can not calculate, try again!")
         print()
