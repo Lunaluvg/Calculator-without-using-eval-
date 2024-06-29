@@ -2,7 +2,9 @@ import math
 # example
 # 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/-9+6/4))+10*(8^-2/12-5/3)+7*(12/15-(14/10*2)) = 1.5736268939393856
 # (((1712/10)-(-(19+8/11*(13/9-(8/716))/6))+22)-(10*(16/13+14/8))-(11*(20/15-(13/7))))+(15*(21/18-(11/12^-7))) = -5912248114.172058
+
 def my_eval(first_input):
+    
     for starting in enumerate(first_input):
         if (starting[1] in '+-*/.') and ( first_input[starting[0]+1] in '+-/*.' and first_input[starting[0]+1] not in "-") or (first_input[-1] in '+-*/'):
             return False
@@ -156,6 +158,7 @@ def my_eval(first_input):
 
         return str(final)
 
+
 equation_1 = []
 dict_equation_value = {}
 
@@ -249,7 +252,9 @@ def simplify_negative(simplify):
         return last_anwser
 # ----------------------------------------------------------------------------- 
 def parenthesis(equation_2):
+
     divide_by_zero = False
+
     for e1 in enumerate(list(reversed(equation_2)),0):
         
         real_temp_str = ""
@@ -450,6 +455,8 @@ while 1:
             print()
             print("=",float(dict_equation_value[f1]))
             print()
+        else:
+            equation_1 = []
     else:
         print()
         print(":Can not calculate, try again!")
