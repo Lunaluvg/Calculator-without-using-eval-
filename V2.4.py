@@ -2,9 +2,7 @@ import math
 # example
 # 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/-9+6/4))+10*(8^-2/12-5/3)+7*(12/15-(14/10*2)) = 1.5736268939393856
 # (((1712/10)-(-(19+8/11*(13/9-(8/716))/6))+22)-(10*(16/13+14/8))-(11*(20/15-(13/7))))+(15*(21/18-(11/12^-7))) = -5912248114.172058
-
 def my_eval(first_input):
-    
     for starting in enumerate(first_input):
         if (starting[1] in '+-*/.') and ( first_input[starting[0]+1] in '+-/*.' and first_input[starting[0]+1] not in "-") or (first_input[-1] in '+-*/'):
             return False
@@ -157,7 +155,7 @@ def my_eval(first_input):
                 final -= group_main_2[j2+1]
 
         return str(final)
-        
+
 equation_1 = []
 dict_equation_value = {}
 
@@ -181,7 +179,7 @@ def remove_bracket(start):
         count_n += 1
         if count_close == count_open:
             break
-            
+
     equation_1.append(f1[start+1:count_n-1])
 
 def simplify_negative(simplify):
@@ -247,14 +245,11 @@ def simplify_negative(simplify):
 
     if my_eval(last_anwser) == False:
         return False
-    
     else:
         return last_anwser
 # ----------------------------------------------------------------------------- 
 def parenthesis(equation_2):
-
     divide_by_zero = False
-
     for e1 in enumerate(list(reversed(equation_2)),0):
         
         real_temp_str = ""
@@ -289,7 +284,7 @@ def parenthesis(equation_2):
                 else:
                     real_temp_str += t1[1]
 
-            elif t1[1] == '(' and keep_bracket == True: # case 5
+            elif t1[1] == '(' and keep_bracket == True:
                 temp_str += t1[1]
                 open_bracket += 1
 
@@ -307,6 +302,7 @@ def parenthesis(equation_2):
             in_expo,skip = False,False
 
             for check_expo in enumerate(real_temp_str,0):
+
                 if skip == True:
                     skip = False
                     continue
@@ -336,8 +332,14 @@ def parenthesis(equation_2):
                     expo += '-'
 
                 elif check_expo[1] in '+-*/' and in_expo == True:
+                    
+                    if have_bracket == True and float(expo) < 1 and '-' in last_anwser_expo:
+                        print()
+                        print(":Imaginary number detected!")
+                        print()
+                        return False
 
-                    if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
+                    elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
                         last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.25f'))
 
                     else:
@@ -359,7 +361,13 @@ def parenthesis(equation_2):
 
                     if check_expo[0] == len(real_temp_str) - 1:
 
-                        if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
+                        if have_bracket == True and float(expo) < 1 and '-' in last_anwser_expo:
+                            print()
+                            print(":Imaginary number detected!")
+                            print()
+                            return False
+
+                        elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
                             last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.25f'))
                         else:
                             last_anwser_expo += str(format(pow(float(base),float(expo)),'.25f'))
@@ -390,6 +398,9 @@ def parenthesis(equation_2):
                 dict_equation_value.update({e1[1]:my_eval(after_simplify)})
 
     if divide_by_zero == True:
+        print()
+        print(':Divide by zero detected!')
+        print()
         return False
     
 while 1:
@@ -400,15 +411,12 @@ while 1:
         if (starting[1] in '+-*/.') and ( f1[starting[0]+1] in '+-/*' and f1[starting[0]+1] not in "-") or (f1[-1] in '^+-*/('):
             can_cal = False
             break
-
         elif (starting[1] not in '+-*/.' and starting[1] not in 'pe()^' and starting[1].isdigit() != True) or (f1[0] in ')+*/.'):
             can_cal = False
             break
-
         elif '()' in f1 or 'ee' in f1 or 'pp' in f1 or 'pe' in f1 or 'ep' in f1:
             can_cal = False
             break
-
         else:
             open_b = 0
             close_b = 0
@@ -421,7 +429,6 @@ while 1:
 
             if close_b == open_b:
                 can_cal = True
-
             else:
                 if open_b > close_b:
                     print()
@@ -439,12 +446,7 @@ while 1:
         after_split = find_bracket(f1)
         after_parenthesis = parenthesis(equation_1)
 
-        if after_parenthesis == False:
-            equation_1 = []
-            print()
-            print(':Divide by zero detected!')
-            print()
-        else:
+        if after_parenthesis != False:
             print()
             print("=",float(dict_equation_value[f1]))
             print()
