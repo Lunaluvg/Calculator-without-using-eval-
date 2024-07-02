@@ -414,7 +414,10 @@ while 1:
     f1 = input("Calculate: ")
 
     for starting in enumerate(f1):
-        if (starting[1] in '+-*/.') and ( f1[starting[0]+1] in '+-/*' and f1[starting[0]+1] not in "-") or (f1[-1] in '^+-*/('):
+        if len(f1) == 1 and starting[1].isdigit() == False:
+            can_cal = False
+            break
+        elif (starting[1] in '+-*/.') and ( f1[starting[0]+1] in '+-/*' and f1[starting[0]+1] not in "-") or (f1[-1] in '^+-*/('):
             can_cal = False
             break
         elif (starting[1] not in '+-*/.' and starting[1] not in 'pe()^' and starting[1].isdigit() != True) or (f1[0] in ')+*/.'):
