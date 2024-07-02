@@ -2,7 +2,7 @@ import math
 # example
 # 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/-9+6/4))+10*(8^-2/12-5/3)+7*(12/15-(14/10*2)) = 1.5736268939393856
 # (((1712/10)-(-(19+8/11*(13/9-(8/716))/6))+22)-(10*(16/13+14/8))-(11*(20/15-(13/7))))+(15*(21/18-(11/12^-7))) = -5912248114.172058
-
+# -2^2 = -4 , (-2)^2 = 4 , (-2)^3 = -8
 def my_eval(first_input):
     
     for starting in enumerate(first_input):
@@ -299,7 +299,8 @@ def parenthesis(equation_2):
                 keep_bracket,keep_str = True,True
                 open_bracket += 1
 
-        if ')^' in e1[1]: have_bracket = True
+        if e1[1].count(')^') != 0 and e1[1].count('^(') == 0 or e1[1].count(')^(') > 0:
+            have_bracket = True
 
         if '^' in real_temp_str:
             last_anwser_expo,temp_num_ex = "","" 
@@ -422,24 +423,16 @@ while 1:
         elif '()' in f1 or 'ee' in f1 or 'pp' in f1 or 'pe' in f1 or 'ep' in f1:
             can_cal = False
             break
+
         else:
-            open_b = 0
-            close_b = 0
-
-            for check_bracket in f1:
-                if check_bracket == '(':
-                    open_b += 1
-                elif check_bracket == ')':
-                    close_b += 1
-
-            if close_b == open_b:
+            if f1.count('(') == f1.count(')'):
                 can_cal = True
             else:
-                if open_b > close_b:
+                if f1.count('(') > f1.count(')'):
                     print()
                     print("-->  '(' was never closed  <--")
-
-                elif open_b < close_b:
+                    
+                elif f1.count(')') > f1.count('('):
                     print()
                     print("-->  '(' was never opened  <--")
 
