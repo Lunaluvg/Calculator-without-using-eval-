@@ -346,10 +346,10 @@ def parenthesis(equation_2):
                         return False
 
                     elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
-                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.25f'))
+                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.250f'))
 
                     else:
-                        last_anwser_expo += str(format(pow(float(base),float(expo)),'.25f'))
+                        last_anwser_expo += str(format(pow(float(base),float(expo)),'.250f'))
 
                     last_anwser_expo += check_expo[1]
                     in_expo = False
@@ -374,9 +374,9 @@ def parenthesis(equation_2):
                             return False
 
                         elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
-                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.25f'))
+                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.250f'))
                         else:
-                            last_anwser_expo += str(format(pow(float(base),float(expo)),'.25f'))
+                            last_anwser_expo += str(format(pow(float(base),float(expo)),'.250f'))
 
                         in_expo = False
                         expo,base = '',''
