@@ -246,6 +246,7 @@ def simplify_negative(simplify):
 
         first_time = False
 
+    if last_anwser[0] == '+': last_anwser = last_anwser[1:]
     if my_eval(last_anwser) == False:
         return False
     else:
