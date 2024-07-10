@@ -340,7 +340,7 @@ def parenthesis(equation_2):
 
                 elif check_expo[1] in '+-*/' and in_expo == True:
                     
-                    if have_bracket == True and '.' in expo and '-' in last_anwser_expo:
+                    if have_bracket == True and float(expo) < 1 and '-' in last_anwser_expo and e1[1].count('(-') > 0:
                         print()
                         print(":Imaginary number detected!")
                         print()
@@ -368,7 +368,7 @@ def parenthesis(equation_2):
 
                     if check_expo[0] == len(real_temp_str) - 1:
 
-                        if have_bracket == True and '.' in expo and '-' in last_anwser_expo:
+                        if have_bracket == True and float(expo) < 1 and '-' in last_anwser_expo and e1[1].count('(-') > 0:
                             print()
                             print(":Imaginary number detected!")
                             print()
