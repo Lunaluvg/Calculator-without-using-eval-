@@ -5,6 +5,3 @@ NOTE1: my eval() Now can't calculate the complex (imaginary number) !!
 Be careful of exponentiating negative numbers with numbers lower than 1 ; example (-2)^0.87 !!! 
 
 NOTE2: if you want to exponent a number use ^ as ** example; 5^2 = 25 , 5^-2 = 0.04 , 5^-(-2) = 25 etc.
-
-NOTE3: I just found that my exponential function gave the incorrect answer in some specific cases.
-Please avoid using exponent for now. (Now fixed)
