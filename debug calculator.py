@@ -1,7 +1,4 @@
-import math 
-# example
-# -(2)^2 = -4.0
-# (-2)^2 = 4.0
+import math # only use for accuracy of pi and e
 def my_eval(first_input):
     
     for starting in enumerate(first_input):
@@ -157,9 +154,11 @@ def my_eval(first_input):
 
         return str(final)
 
+
 equation_1 = []
 dict_equation_value = {}
 negative_infront_bracket = []
+negative_after_bracket = []
 
 def find_bracket(check_bracket):
 
@@ -250,7 +249,10 @@ def simplify_negative(simplify):
         first_time = False
 
     if last_anwser[0] == '+':last_anwser = last_anwser[1:]
-    if my_eval(last_anwser) == False:return False
+
+    if my_eval(last_anwser) == False:
+        return False
+    
     else:
         print('last_anwser:',last_anwser)
         return last_anwser
@@ -262,7 +264,12 @@ def parenthesis(equation_2):
 
     for e1 in enumerate(list(reversed(equation_2)),0):
 
+        negative_after_bracket.clear()
+        negative_infront_bracket.clear()
+
+        print('--------------')
         print('e1:',e1[1])
+        print('--------------')
         
         real_temp_str = ""
         temp_str = ""
@@ -296,8 +303,17 @@ def parenthesis(equation_2):
 
                 if t1[1] == '-':
                     real_temp_str += t1[1]
+
+                    if e1[1].count('(') == 0: # if there's no bracket
+
+                        continue
+
                     if e1[1][t1[0]+1] == '(':
                         negative_infront_bracket.append(1)
+                        
+                    if e1[1][t1[0]+2] == '-':
+                        negative_after_bracket.append(1)
+
                 else:
                     real_temp_str += t1[1]
 
@@ -315,8 +331,10 @@ def parenthesis(equation_2):
 
         if e1[1].count(')^') != 0 and e1[1].count('^(') == 0 or e1[1].count(')^(') > 0:have_bracket = True
 
+        print('-----------')
         print('have_bracket:',have_bracket)
-        print()
+        print('negative_after_bracket:',negative_after_bracket)
+        print('-----------')
 
         if '^' in real_temp_str:
 
@@ -328,6 +346,8 @@ def parenthesis(equation_2):
             in_expo,skip = False,False
 
             for check_expo in enumerate(real_temp_str,0):
+
+                print('check_expo:',check_expo[1])
 
                 if skip == True:
                     skip = False
@@ -359,11 +379,23 @@ def parenthesis(equation_2):
 
                 elif check_expo[1] in '+-*/' and in_expo == True:
 
-                    if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) != 1:
-                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
+                    print('--------------------------------------1')
+                    print('have_bracket:',have_bracket)
+                    print('negative_infront_bracket:',negative_infront_bracket)
+                    print('negative_after_bracket:',negative_after_bracket)
+                    print('last_anwser_expo:',last_anwser_expo)
+                    print('--------------------------------------')
+
+                    if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) == 1 and len(negative_after_bracket) > 0:
+
+                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.50f'))
+
+                    elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) != 1:
+
+                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.50f'))
 
                     else:
-                        last_anwser_expo += str(format(pow(float(base),float(expo)),'.5000f'))
+                        last_anwser_expo += str(format(pow(float(base),float(expo)),'.50f'))
 
                     last_anwser_expo += check_expo[1]
                     in_expo = False
@@ -381,10 +413,23 @@ def parenthesis(equation_2):
 
                     if check_expo[0] == len(real_temp_str) - 1:
 
-                        if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) != 1:
-                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
+                        print('--------------------------------------2')
+                        print('have_bracket:',have_bracket)
+                        print('negative_infront_bracket:',negative_infront_bracket)
+                        print('negative_after_bracket:',negative_after_bracket)
+                        print('last_anwser_expo:',last_anwser_expo)
+                        print('--------------------------------------')
+
+                        if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) == 1 and len(negative_after_bracket) > 0:
+
+                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.50f'))
+
+                        elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) != 1:
+                        
+                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.50f'))
+
                         else:
-                            last_anwser_expo += str(format(pow(float(base),float(expo)),'.5000f'))
+                            last_anwser_expo += str(format(pow(float(base),float(expo)),'.50f'))
 
                         in_expo = False
                         expo,base = '',''
@@ -415,8 +460,6 @@ def parenthesis(equation_2):
 
         print('dict_equation_value:',dict_equation_value)
         print()
-
-        negative_infront_bracket.clear()
 
     if divide_by_zero == True:
         print()
