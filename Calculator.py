@@ -357,13 +357,13 @@ def parenthesis(equation_2):
                 elif check_expo[1] in '+-*/' and in_expo == True:
 
                     if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) == 1 and len(negative_after_bracket) > 0:
-                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
+                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.500f'))
 
                     elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) != 1:
-                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
+                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.500f'))
 
                     else:
-                        last_anwser_expo += str(format(pow(float(base),float(expo)),'.5000f'))
+                        last_anwser_expo += str(format(pow(float(base),float(expo)),'.500f'))
 
                     last_anwser_expo += check_expo[1]
                     in_expo = False
@@ -382,13 +382,13 @@ def parenthesis(equation_2):
                     if check_expo[0] == len(real_temp_str) - 1:
 
                         if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) == 1 and len(negative_after_bracket) > 0:
-                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
+                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.500f'))
 
                         elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) != 1:
-                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
+                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.500f'))
 
                         else:
-                            last_anwser_expo += str(format(pow(float(base),float(expo)),'.5000f'))
+                            last_anwser_expo += str(format(pow(float(base),float(expo)),'.500f'))
 
                         in_expo = False
                         expo,base = '',''
