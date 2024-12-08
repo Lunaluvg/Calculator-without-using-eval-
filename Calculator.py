@@ -1,8 +1,9 @@
 import math 
-# example
-# 20/11*(15+7/10*(14/6-(9/54))+11/8-3*(13/-9+6/4))+10*(8^-2/12-5/3)+7*(12/15-(14/10*2)) = 1.5736268939393856
-# (((1712/10)-(-(19+8/11*(13/9-(8/716))/6))+22)-(10*(16/13+14/8))-(11*(20/15-(13/7))))+(15*(21/18-(11/12^-7))) = -5912248114.172058
-# -2^2 = -4 , (-2)^2 = 4 , (-2)^3 = -8
+# example fixed cases
+# -(2)^2 = -4.0
+# (-2)^2 = 4.0
+# --(-2)^2 = 4.0
+# ---(-2)^2 = -4.0
 def my_eval(first_input):
     
     for starting in enumerate(first_input):
@@ -161,6 +162,8 @@ def my_eval(first_input):
 
 equation_1 = []
 dict_equation_value = {}
+negative_infront_bracket = []
+negative_after_bracket = []
 
 def find_bracket(check_bracket):
 
@@ -180,6 +183,7 @@ def remove_bracket(start):
             count_close += 1
 
         count_n += 1
+        
         if count_close == count_open:
             break
 
@@ -246,17 +250,19 @@ def simplify_negative(simplify):
 
         first_time = False
 
-    if last_anwser[0] == '+': last_anwser = last_anwser[1:]
-    if my_eval(last_anwser) == False:
-        return False
-    else:
-        return last_anwser
-# ----------------------------------------------------------------------------- 
+    if last_anwser[0] == '+':last_anwser = last_anwser[1:]
+    if my_eval(last_anwser) == False:return False
+    else:return last_anwser
+# -----------------------------------------------------------------------------
+
 def parenthesis(equation_2):
 
     divide_by_zero = False
 
     for e1 in enumerate(list(reversed(equation_2)),0):
+
+        negative_after_bracket.clear()
+        negative_infront_bracket.clear()
         
         real_temp_str = ""
         temp_str = ""
@@ -272,11 +278,12 @@ def parenthesis(equation_2):
             if (close_bracket == open_bracket) and (close_bracket != 0 and open_bracket != 0):
                 
                 for t2 in dict_equation_value:
+
                     if temp_str == t2:
+
                         real_temp_str += dict_equation_value[t2]
                         temp_str = ""
-                        keep_str = False
-                        keep_bracket = False
+                        keep_str,keep_bracket = False,False
                         wait_for_bracket = True
                         open_bracket,close_bracket = 0,0
 
@@ -287,6 +294,16 @@ def parenthesis(equation_2):
 
                 if t1[1] == '-':
                     real_temp_str += t1[1]
+
+                    if e1[1].count('(') == 0:
+                        continue
+
+                    if e1[1][t1[0]+1] == '(':
+                        negative_infront_bracket.append(1)
+                        
+                    if e1[1][t1[0]+2] == '-':
+                        negative_after_bracket.append(1)
+
                 else:
                     real_temp_str += t1[1]
 
@@ -300,10 +317,9 @@ def parenthesis(equation_2):
                 keep_bracket,keep_str = True,True
                 open_bracket += 1
 
-        if e1[1].count(')^') != 0 and e1[1].count('^(') == 0 or e1[1].count(')^(') > 0:
-            have_bracket = True
-
+        if e1[1].count(')^') != 0 and e1[1].count('^(') == 0 or e1[1].count(')^(') > 0:have_bracket = True
         if '^' in real_temp_str:
+
             last_anwser_expo,temp_num_ex = "","" 
             expo,base = '',''
             in_expo,skip = False,False
@@ -339,18 +355,15 @@ def parenthesis(equation_2):
                     expo += '-'
 
                 elif check_expo[1] in '+-*/' and in_expo == True:
-                    
-                    if have_bracket == True and float(expo) < 1 and '-' in last_anwser_expo and e1[1].count('(-') > 0:
-                        print()
-                        print(":Imaginary number detected!")
-                        print()
-                        return False
 
-                    elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
-                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.250f'))
+                    if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) == 1 and len(negative_after_bracket) > 0:
+                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
+
+                    elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) != 1:
+                        last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
 
                     else:
-                        last_anwser_expo += str(format(pow(float(base),float(expo)),'.250f'))
+                        last_anwser_expo += str(format(pow(float(base),float(expo)),'.5000f'))
 
                     last_anwser_expo += check_expo[1]
                     in_expo = False
@@ -368,16 +381,14 @@ def parenthesis(equation_2):
 
                     if check_expo[0] == len(real_temp_str) - 1:
 
-                        if have_bracket == True and float(expo) < 1 and '-' in last_anwser_expo and e1[1].count('(-') > 0:
-                            print()
-                            print(":Imaginary number detected!")
-                            print()
-                            return False
+                        if have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) == 1 and len(negative_after_bracket) > 0:
+                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
 
-                        elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo:
-                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.250f'))
+                        elif have_bracket == True and float(expo) % 2 == 0 and '-' in last_anwser_expo and len(negative_infront_bracket) != 1:
+                            last_anwser_expo += '-'+str(format(pow(float(base),float(expo)),'.5000f'))
+
                         else:
-                            last_anwser_expo += str(format(pow(float(base),float(expo)),'.250f'))
+                            last_anwser_expo += str(format(pow(float(base),float(expo)),'.5000f'))
 
                         in_expo = False
                         expo,base = '',''
@@ -401,6 +412,7 @@ def parenthesis(equation_2):
             if after_simplify == False:
                 divide_by_zero = True
                 break
+
             else:
                 dict_equation_value.update({e1[1]:my_eval(after_simplify)})
 
@@ -414,7 +426,8 @@ while 1:
     can_cal = False
     f1 = input("Calculate: ")
 
-    for starting in enumerate(f1):
+    for starting in enumerate(f1,0):
+
         if len(f1) == 1 and starting[1].isdigit() == False and starting[1] not in 'pe':
             can_cal = False
             break
@@ -424,7 +437,7 @@ while 1:
         elif (starting[1] not in '+-*/.' and starting[1] not in 'pe()^' and starting[1].isdigit() != True) or (f1[0] in ')+*/.'):
             can_cal = False
             break
-        elif '()' in f1 or 'ee' in f1 or 'pp' in f1 or 'pe' in f1 or 'ep' in f1 or f1.count('..') != 0:
+        elif '()' in f1 or 'ee' in f1 or 'pp' in f1 or 'pe' in f1 or 'ep' in f1:
             can_cal = False
             break
 
@@ -435,7 +448,7 @@ while 1:
                 if f1.count('(') > f1.count(')'):
                     print()
                     print("-->  '(' was never closed  <--")
-                    
+
                 elif f1.count(')') > f1.count('('):
                     print()
                     print("-->  '(' was never opened  <--")
@@ -445,7 +458,7 @@ while 1:
 
     if can_cal == True:
         equation_1.append(f1[0:])
-        after_split = find_bracket(f1)
+        find_bracket(f1)
         after_parenthesis = parenthesis(equation_1)
 
         if after_parenthesis != False:
@@ -458,3 +471,4 @@ while 1:
         print()
         print(":Can not calculate, try again!")
         print()
+
