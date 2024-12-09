@@ -470,7 +470,6 @@ def parenthesis(equation_2):
 while 1:
     can_cal = False
     f1 = input("Calculate: ")
-
     for starting in enumerate(f1,0):
 
         if len(f1) == 1 and starting[1].isdigit() == False and starting[1] not in 'pe':
@@ -511,6 +510,7 @@ while 1:
             print("=",float(dict_equation_value[f1]))
             print()
             equation_1.clear()
+            dict_equation_value.clear()
         else:
             equation_1 = []
     else:
