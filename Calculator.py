@@ -465,6 +465,7 @@ while 1:
             print()
             print("=",float(dict_equation_value[f1]))
             print()
+            dict_equation_value.clear()
             equation_1.clear()
         else:
             equation_1 = []
