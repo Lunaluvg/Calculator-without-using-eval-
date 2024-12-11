@@ -1,5 +1,5 @@
 import math 
-# example fixed cases
+# example new update
 # -(2)^2 = -4.0
 # (-2)^2 = 4.0
 # --(-2)^2 = 4.0
