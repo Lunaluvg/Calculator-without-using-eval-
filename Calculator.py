@@ -301,7 +301,7 @@ def parenthesis(equation_2):
                     if e1[1][t1[0]+1] == '(':
                         negative_infront_bracket.append(1)
                         
-                    if e1[1][t1[0]+2] == '-':
+                    if e1[1][t1[0]+1] == '-':
                         negative_after_bracket.append(1)
 
                 else:
